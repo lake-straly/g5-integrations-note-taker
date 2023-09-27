@@ -1,4 +1,4 @@
-let name = 'Lake S';
+let userName = 'Lake S';
 console.log('Started note taker for Marketing Center integrations.');
 let formHeaders = document.querySelectorAll('div.form-horizontal > div.form-group:first-child');
 let integrationForm;
@@ -55,8 +55,9 @@ function createNotes(noteLocations) {
         }
     });
     console.log(locationObjs);
+    window.alert(`Added notes for ${locationObjs.length} location(s).`);
     locationObjs.forEach((location) => {
-        let note = `${currentDate} ${name} - Added: ${location.name} (lspid: ${location.lspid} | partnerpid: ${location.partnerpid}).`;
+        let note = `${currentDate} ${userName} - Added: ${location.name} (lspid: ${location.lspid} | partnerpid: ${location.partnerpid}).`;
         if (inventoryNotesField.value.length > 0) {
             inventoryNotesField.value = `${note}\n${inventoryNotesField.value}`;
         } else {
