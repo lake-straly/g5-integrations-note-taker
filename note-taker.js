@@ -81,11 +81,16 @@ function allLocations() {
     createNotes(locations);
 }
 
+function allNotSavedLocations() {
+    let locations = integrationForm.querySelectorAll('.form-group:not(:first-child):not(.has-location-code)');
+    createNotes(locations);
+}
+
 let validInput = true;
 function getUserInput() {
     let userInput;
     if (validInput) {
-        userInput = window.prompt('What location(s) would you like to make notes for?\n(1) For all locations with codes and that have been saved.\n(2) For all selected locations.\n(3) For all locations with location codes.');
+        userInput = window.prompt('What location(s) would you like to make notes for?\n(1) For all locations with codes and that have been saved.\n(2) For all selected locations.\n(3) For all locations with location codes.\n(4) For all locations with location codes, but not saved.');
     }
     if (userInput == 1) {
         allSavedLocations();
@@ -93,10 +98,12 @@ function getUserInput() {
         selectedLocations();
     } else if (userInput == 3) {
         allLocations();
+    } else if (userInput == 4) {
+        allNotSavedLocations();
     } else if (userInput === null) {
         return;
     } else {
-        userInput = window.prompt('Detected an invalid input. Please select from the following options:\n(1) For all locations with codes and that have been saved.\n(2) For all selected locations.\n(3) For all locations with location codes.');
+        userInput = window.prompt('Detected an invalid input. Please select from the following options:\n(1) For all locations with codes and that have been saved.\n(2) For all selected locations.\n(3) For all locations with location codes.\n(4) For all locations with location codes, but not saved.');
         validInput = false;
         getUserInput();
     }
