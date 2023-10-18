@@ -134,5 +134,5 @@ function runScript() {
     }
     getUserInput();
 }
-const g5IntDashUrlRegex = /^https:\/\/integrations\.g5marketingcloud\.com\/client_vendor_settings\/.*\/edit$/;
+const g5IntDashUrlRegex = /^https:\/\/integrations\.g5marketingcloud\.com\/client_vendor_settings\/.*\/edit$/|/^https:\/\/integrations\.g5marketingcloud\.com\/client_vendor_settings\/new\?.*$/;
 g5IntDashUrlRegex.test(window.location.href) ? runScript() : window.alert("You must be in the G5 Integrations Dashboard and have a Client Vendor Settings (CVS) page open in order to run this script.");
