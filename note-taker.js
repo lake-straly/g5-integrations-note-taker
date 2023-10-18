@@ -1,10 +1,9 @@
 let userName = 'Lake S';
-let integrationType = function () {
-    let integrationTypeH2 = document.querySelector('div.row.main > div > h2');
-    if (integrationTypeH2.innerHTML.toLowerCase().includes('marketing center')) {
-        return 'Marketing Center';
-    }
-};
+let integrationType;
+let integrationTypeH2 = document.querySelector('div.row.main > div > h2');
+if (integrationTypeH2.innerHTML.toLowerCase().includes('marketing center')) {
+    integrationType = 'Marketing Center';
+}
 console.log('Started note taker for G5 Integrations Dashboard.');
 let integrationForm = document.querySelector('div.row:last-of-type > div > div.form-horizontal');
 let inventoryNotesField;
