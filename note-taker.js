@@ -1,4 +1,15 @@
-let userName = 'Lake S';
+let g5IntNoteTaker = {};
+g5IntNoteTaker.userName = localStorage.getItem('g5IntNoteTaker.userName');
+if (!g5IntNoteTaker.userName) {
+    g5IntNoteTaker.userName = prompt('Please enter your name how you want it to appear in notes: (Ex: John D)');
+    if (g5IntNoteTaker.userName) {
+        localStorage.setItem('g5IntNoteTaker.userName', g5IntNoteTaker.userName);
+    } else {
+        alert('You must enter your name for this bookmarklet to work.');
+        return;
+    }
+}
+
 let integrationType;
 let integrationTypeH2 = document.querySelector('div.row.main > div > h2');
 if (integrationTypeH2.innerHTML.toLowerCase().includes('marketing center')) {
@@ -64,7 +75,7 @@ function createNotes(noteLocations) {
     console.log(locationObjs);
     window.alert(`Added notes for ${locationObjs.length} location(s).`);
     locationObjs.forEach((location) => {
-        let notePt1 = `${currentDate} ${userName} - Added: ${location.name} `;
+        let notePt1 = `${currentDate} ${g5IntNoteTaker.userName} - Added: ${location.name} `;
         let notePt2 = `(id: ${location.id}).`;
         if (integrationType === 'Marketing Center') {
             notePt2 = `(lspid: ${location.lspid} | partnerpid: ${location.partnerpid}).`;
