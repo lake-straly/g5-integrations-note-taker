@@ -1,17 +1,12 @@
 let userName = 'Lake S';
-console.log('Started note taker for Marketing Center integrations.');
-let formHeaders = document.querySelectorAll('div.form-horizontal > div.form-group:first-child');
-let integrationForm;
-formHeaders.forEach((header) => {
-    for (let i = 0; i < header.children.length; i++) {
-        if (header.children[i].querySelector('label')) {
-            if (header.children[i].querySelector('label').innerHTML.toLowerCase().includes('leasestar property')) {
-                integrationForm = header.parentElement;
-            }
-        }
+let integrationType = function () {
+    let integrationTypeH2 = document.querySelector('div.row.main > div > h2');
+    if (integrationTypeH2.innerHTML.toLowerCase().includes('marketing center')) {
+        return 'Marketing Center';
     }
-});
-
+};
+console.log('Started note taker for G5 Integrations Dashboard.');
+let integrationForm = document.querySelector('div.row:last-of-type > div > div.form-horizontal');
 let inventoryNotesField;
 let leadsNotesField;
 function getNotesFields() {
@@ -43,21 +38,39 @@ function createNotes(noteLocations) {
     let currentDate = `${month}/${day}/${year}`;
 
     let locationObjs = [];
+
     noteLocations.forEach((location) => {
-        let locationObj = {
-            name: location.querySelector(':scope > div:first-child > label').innerHTML,
-            internalName: location.querySelector(':scope > div:nth-child(2) > label').innerHTML,
-            lspid: location.querySelector(':scope > div:nth-child(3) > input').value,
-            partnerpid: location.querySelector(':scope > div:nth-child(4) > input').value
-        };
-        if (locationObj.lspid.length > 0 && locationObj.partnerpid.length > 0) {
-            locationObjs.push(locationObj);
+        let locationObj;
+        if (integrationType === 'Marketing Center') {
+            locationObj = {
+                name: location.querySelector(':scope > div:first-child > label').innerHTML,
+                internalName: location.querySelector(':scope > div:nth-child(2) > label').innerHTML,
+                lspid: location.querySelector(':scope > div:nth-child(3) > input').value,
+                partnerpid: location.querySelector(':scope > div:nth-child(4) > input').value
+            };
+            if (locationObj.lspid.length > 0 && locationObj.partnerpid.length > 0) {
+                locationObjs.push(locationObj);
+            }
+        } else {
+            locationObj = {
+                name: location.querySelector(':scope > div:first-child > label').innerHTML,
+                internalName: location.querySelector(':scope > div:nth-child(2) > label').innerHTML,
+                id: location.querySelector(':scope > div:nth-child(3) > input').value
+            };
+            if (locationObj.id.length > 0) {
+                locationObjs.push(locationObj);
+            }
         }
     });
     console.log(locationObjs);
     window.alert(`Added notes for ${locationObjs.length} location(s).`);
     locationObjs.forEach((location) => {
-        let note = `${currentDate} ${userName} - Added: ${location.name} (lspid: ${location.lspid} | partnerpid: ${location.partnerpid}).`;
+        let notePt1 = `${currentDate} ${userName} - Added: ${location.name} `;
+        let notePt2 = `(id: ${location.id}).`;
+        if (integrationType === 'Marketing Center') {
+            notePt2 = `(lspid: ${location.lspid} | partnerpid: ${location.partnerpid}).`;
+        }
+        let note = `${notePt1}${notePt2}`;
         if (inventoryNotesField.value.length > 0) {
             inventoryNotesField.value = `${note}\n${inventoryNotesField.value}`;
         } else {
