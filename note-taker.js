@@ -51,24 +51,21 @@ function runScript() {
         let locationObjs = [];
 
         noteLocations.forEach((location) => {
-            let locationObj;
+            let locationObj = {};
             if (integrationType === 'Marketing Center') {
-                locationObj = {
-                    name: location.querySelector(':scope > div:first-child > label').innerHTML,
-                    internalName: location.querySelector(':scope > div:nth-child(2) > label').innerHTML,
-                    lspid: location.querySelector(':scope > div:nth-child(3) > input').value,
-                    partnerpid: location.querySelector(':scope > div:nth-child(4) > input').value
-                };
-                if (locationObj.lspid.length > 0 && locationObj.partnerpid.length > 0) {
+                location.querySelector(':scope > div:first-child > label') ? locationObj.name = location.querySelector(':scope > div:first-child > label').innerHTML : null;
+                location.querySelector(':scope > div:nth-child(2) > label') ? locationObj.internalName = location.querySelector(':scope > div:nth-child(2) > label').internalHTML : null;
+                location.querySelector(':scope > div:nth-child(3) > input') ? locationObj.lspid = location.querySelector(':scope > div:nth-child(3) > input').value : null;
+                console.log(locationObj.lspid);
+                location.querySelector(':scope > div:nth-child(4) > input') ? locationObj.partnerpid = location.querySelector(':scope > div:nth-child(4) > input').value : null;
+                if (locationObj.lspid && locationObj.partnerpid && locationObj.lspid.length > 0 && locationObj.partnerpid.length > 0) {
                     locationObjs.push(locationObj);
                 }
             } else {
-                locationObj = {
-                    name: location.querySelector(':scope > div:first-child > label').innerHTML,
-                    internalName: location.querySelector(':scope > div:nth-child(2) > label').innerHTML,
-                    id: location.querySelector(':scope > div:nth-child(3) > input').value
-                };
-                if (locationObj.id.length > 0) {
+                location.querySelector(':scope > div:first-child > label') ? locationObj.name = location.querySelector(':scope > div:first-child > label').innerHTML : null;
+                location.querySelector(':scope > div:nth-child(2) > label') ? locationObj.internalName = location.querySelector(':scope > div:nth-child(2) > label').innerHTML : null;
+                location.querySelector(':scope > div:nth-child(3) > input') ? locationObj.id = location.querySelector(':scope > div:nth-child(3) > input').value : null;
+                if (locationObj.id && locationObj.id.length > 0) {
                     locationObjs.push(locationObj);
                 }
             }
@@ -101,12 +98,12 @@ function runScript() {
     }
 
     function allLocations() {
-        let locations = integrationForm.querySelectorAll('.form-group:not(:first-child)');
+        let locations = integrationForm.querySelectorAll('.form-group');
         createNotes(locations);
     }
 
     function allNotSavedLocations() {
-        let locations = integrationForm.querySelectorAll('.form-group:not(:first-child):not(.has-location-code)');
+        let locations = integrationForm.querySelectorAll('.form-group:not(.has-location-code)');
         createNotes(locations);
     }
 
